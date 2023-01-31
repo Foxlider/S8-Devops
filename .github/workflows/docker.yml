@@ -1,52 +1,43 @@
 name: CD Docker
 on:
-  workflow_run:
+  workflow_run:                 # Trigger on workflow run 
     workflows: [CI Devops]
     types:
-      - completed
-
-
+      - completed               # When CI is done
   workflow_dispatch:            # Included manual trigger
 
 jobs:
-  # define job to build and publish docker image
   build-docker-image:
     
-    runs-on: ubuntu-22.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}     # run only when code is compiling and tests are passing
+    runs-on: ubuntu-22.04                                             # Run on ubuntu
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}      # run only when code is compiling and tests are passing
 
     # steps to perform in job
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3             # Re-checkout the code just in case
+        uses: actions/checkout@v3                                     # Re-checkout the code just in case
 
-      - name: Login to DockerHub              # Login to docker with token
+      - name: Login to DockerHub                                      # Login to docker with token
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build image and push backend    # Build image BACKEND with java stuff and push it
-        uses: docker/build-push-action@v3
+      - name: Build image and push backend                            # Build image BACKEND with java stuff and push it
+        uses: docker/build-push-action@v3                             # With latest docker build and push
         with:
-          # relative path to the place where source code with Dockerfile is located
-          context: ./TP1/backend-api
-          # Note: tags has to be all lower-case
-          tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend
-          push: ${{ github.ref == 'refs/heads/main' }}
+          context: ./TP1/backend-api                                  # Use the correct path
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend              # Tag backend image with docker username 
+          push: ${{ github.ref == 'refs/heads/main' }}                # Push only if on master branch
 
-      - name: Build image and push database   # Build image POSTGRES and push it
-        uses: docker/build-push-action@v3
+      - name: Build image and push database                           # Build image POSTGRES and push it
+        uses: docker/build-push-action@v3                             #Same as above
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: ./TP1/pg-database
-          # Note: tags has to be all lower-case
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/pg_db
           push: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Build image and push httpd      # Build image POSTGRES and push it
-        uses: docker/build-push-action@v3
+      - name: Build image and push httpd                              # Build image POSTGRES and push it
+        uses: docker/build-push-action@v3                             # Same as above's above
         with:
-          # relative path to the place where source code with Dockerfile is located
           context: ./TP1/oueb
-          # Note: tags has to be all lower-case
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/oueb
           push: ${{ github.ref == 'refs/heads/main' }}
       

@@ -1,27 +1,24 @@
 name: CI Devops
 on:
-  #to begin you want to launch this job in main and develop
   push:
-    branches: [ "main", "dev" ] # Included main branch and dev branch
-  pull_request:                 # Included PR into tests
-  workflow_dispatch:            # Included manual trigger
+    branches: [ "main", "dev" ]       # Included main branch and dev branch
+  pull_request:                       # Included PR into tests
+  workflow_dispatch:                  # Included manual trigger
 
 jobs:
   test-backend: 
-    runs-on: ubuntu-22.04       # RUN on ubuntu
+    runs-on: ubuntu-22.04             # RUN on ubuntu
     steps:
-     #checkout your github code using actions/checkout@v2.5.0
       - uses: actions/checkout@v3     # Checkout code with latest version from Github Actions
 
-     #do the same with another action (actions/setup-java@v3) that enable to setup jdk 17
       - name: Set up JDK 17           # Set up JDK 17
         uses: actions/setup-java@v3   # Using latest setup java from their repo
         with:
           java-version: '17'          # Use temurin JDK 17
-          distribution: 'temurin'
+          distribution: 'temurin'     #
           cache: maven                # Set cache
 
-     #finally build your app with the latest command
       - name: Build and test with Maven
         # run: mvn -B package --file pom.xml
+                                      # clean repo, build and verify with Unit Tests and Sonar
         run: mvn clean verify sonar:sonar -Dsonar.projectKey=Foxlider_S8-Devops -Dsonar.organization=foxlicorp -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${{ secrets.SONAR_TOKEN }} --file ./TP1/backend-api/src/pom.xml    # Point to our pom.xml
