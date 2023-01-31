@@ -36,12 +36,12 @@ jobs:
     # steps to perform in job
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3             # Re-checkout the code just in case
 
-      - name: Login to DockerHub
+      - name: Login to DockerHub              # Login to docker with token
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build image and push backend
+      - name: Build image and push backend    # Build image BACKEND with java stuff and push it
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
@@ -50,7 +50,7 @@ jobs:
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/backend
           push: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Build image and push database
+      - name: Build image and push database   # Build image POSTGRES and push it
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
@@ -59,7 +59,7 @@ jobs:
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/pg_db
           push: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Build image and push httpd
+      - name: Build image and push httpd      # Build image POSTGRES and push it
         uses: docker/build-push-action@v3
         with:
           # relative path to the place where source code with Dockerfile is located
