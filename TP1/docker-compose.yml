@@ -1,0 +1,49 @@
+version: '3.1'
+
+# The Database layer requires two services on its network
+# Backend layer ony requires the backend image
+services:
+  db:                       # The db service is the postgres database
+    build:
+        context: ./pg-database
+        dockerfile: Dockerfile
+    image: keelah/pg_db     # Using our own image based on the postgres 14.1 alpine
+    container_name: pg_db   #
+    restart: always         # For security reasons, we restart it always
+    environment:            # Basic env variables are set here
+      POSTGRES_DB: db
+      POSTGRES_USER: usr
+    env_file:               # Passwords and sensitive data are set in an hidden env file
+      - .env
+    volumes:                # Data persistence is set via physical volume but could be switched to docker volumes
+      - ./storage:/var/lib/postgresql/data
+
+  adminer:                  # The adminer service uses the latest adminer image
+    image: adminer
+    container_name: adminer
+    restart: always         # Just like the database, it should always restart
+    ports:                  # The adminer is accessible via the http 8080 port
+      - 8080:8080
+
+
+
+  backend:                  # The backend layer uses our own image built using maven 3.8.7 and eclipse-temurin 17 on alpine
+    build:
+        context: ./backend-api
+        dockerfile: Dockerfile
+    image: keelah/backend
+    container_name: backend
+    restart: always         # Like the rest, it restarts always
+    ports:
+      - 8181:8080           # We kept adminer so we are using 8181 for the API
+
+
+  oueb:
+    build:
+        context: ./oueb
+        dockerfile: Dockerfile
+    image: keelah/oueb
+    container_name: oueb
+    restart: unless-stopped
+    ports:
+      - 80:80
