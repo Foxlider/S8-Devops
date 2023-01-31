@@ -4,16 +4,29 @@
 ## __testcontainers__
 > 2-1 What are testcontainers?   
 
-Temporary Containers that are used for testing purposes
+Temporary Containers that are used to run unitary tests, it is a `maven` based container that delete the old build and make a fresh one then run tests and return the results. 
 
-## __CI__
+## __Github Actions__
+> 2-2 Document your Github Actions configurations.
 
-We added a few lines to the default yml :
-It was missing `uses: actions/setup-java@v3`   # Using latest setup java from their repo`
+### __CI__
 
-## __CD__
+We added a few lines to the default yml :  
+It was missing `uses: actions/setup-java@v3`
+
+### __CD__
 
 `.github/workflows/docker.yml` commented
+
+
+## __Quality Gate__
+
+>Document your quality gate configuration.
+
+On our quality gate we can see all sorts of things like bug vulneraibities or security hotspots. In our case we left the default configuration.We just added a token so the pipeline can push results.   
+We have a few issues with the quality of the code because there is 2 code smells, 2 vunerabilites an 3 security hotspots.
+
+# __Bonus__
 
 ## __Split CI/CD__
 

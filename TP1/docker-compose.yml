@@ -38,12 +38,12 @@ services:
       - 8181:8080           # We kept adminer so we are using 8181 for the API
 
 
-  oueb:
+  oueb:                     # The web proxy layer uses the latest httpd image
     build:
         context: ./oueb
         dockerfile: Dockerfile
     image: keelah/oueb
-    container_name: oueb
-    restart: unless-stopped
+    container_name: oueb    # ouèbe
+    restart: unless-stopped 
     ports:
-      - 80:80
+      - 80:80               # We still need to bind the port http
