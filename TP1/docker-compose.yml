@@ -23,7 +23,7 @@ services:
     container_name: adminer
     restart: always         # Just like the database, it should always restart
     ports:                  # The adminer is accessible via the http 8080 port
-      - 8080:8080
+      - 8585:8080
 
 
 
@@ -48,6 +48,18 @@ services:
       - 8182:8080           # We kept adminer so we are using 8181 for the API
 
 
+  fonrt:
+    build: 
+      context: ./front
+      dockerfile: Dockerfile
+    image: keelah/fonrt
+    container_name: fonrt
+    restart: unless-stopped
+    ports:
+      - 80:80
+
+
+
   oueb:                     # The web proxy layer uses the latest httpd image
     build:
         context: ./oueb
@@ -56,4 +68,4 @@ services:
     container_name: oueb    # ouèbe
     restart: unless-stopped 
     ports:
-      - 80:80               # We still need to bind the port http
+      - 82:80               # We still need to bind the port http

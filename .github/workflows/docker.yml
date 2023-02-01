@@ -40,5 +40,12 @@ jobs:
           context: ./TP1/oueb
           tags:  ${{secrets.DOCKERHUB_USERNAME}}/oueb
           push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Build image and push fonrt                           # Build image POSTGRES and push it
+        uses: docker/build-push-action@v3                             #Same as above
+        with:
+          context: ./TP1/front
+          tags:  ${{secrets.DOCKERHUB_USERNAME}}/fonrt
+          push: ${{ github.ref == 'refs/heads/main' }}
       
 
