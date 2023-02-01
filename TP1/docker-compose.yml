@@ -27,15 +27,25 @@ services:
 
 
 
-  backend:                  # The backend layer uses our own image built using maven 3.8.7 and eclipse-temurin 17 on alpine
-    build:
+  backend-1:                # The backend layer uses our own image built using maven 3.8.7 and eclipse-temurin 17 on alpine
+    build:                  # THis is backend 1 for load balancing
         context: ./backend-api
         dockerfile: Dockerfile
     image: keelah/backend
-    container_name: backend
+    container_name: backend-1
     restart: always         # Like the rest, it restarts always
     ports:
       - 8181:8080           # We kept adminer so we are using 8181 for the API
+
+  backend-2:                # The backend layer uses our own image built using maven 3.8.7 and eclipse-temurin 17 on alpine
+    build:                  # This is backend 2 for load balancing
+        context: ./backend-api
+        dockerfile: Dockerfile
+    image: keelah/backend
+    container_name: backend-2
+    restart: always         # Like the rest, it restarts always
+    ports:
+      - 8182:8080           # We kept adminer so we are using 8181 for the API
 
 
   oueb:                     # The web proxy layer uses the latest httpd image
