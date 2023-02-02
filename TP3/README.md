@@ -12,8 +12,8 @@ alexis.lonchambon.takima.cloud | SUCCESS => {
 }
 ```
 
-
-╭─ keelah     ~/Documents/Dev/S8-Devops/TP1    main !5 ?3 ▓▒░                                                                                                              ░▒▓ ✔  13:57  
+```
+╭─ keelah     ~/Documents/Dev/S8-Devops/TP1    main !5 ?3 
 ╰─ ansible all -i ansible/inventories/setup.yml -m setup -a "filter=ansible_distribution*"
 alexis.lonchambon.takima.cloud | SUCCESS => {
     "ansible_facts": {
@@ -28,10 +28,10 @@ alexis.lonchambon.takima.cloud | SUCCESS => {
     },
     "changed": false
 }
+```
 
-
-
-╭─ keelah     ~/Documents/Dev/S8-Devops/TP1    main !5 ?3 ▓▒░                                                                                                              ░▒▓ ✔  13:58  
+```
+╭─ keelah     ~/Documents/Dev/S8-Devops/TP1    main !5 ?3 
 ╰─ ansible all -i ansible/inventories/setup.yml -m yum -a "name=httpd state=absent" --become
 alexis.lonchambon.takima.cloud | CHANGED => {
     "ansible_facts": {
@@ -45,7 +45,7 @@ alexis.lonchambon.takima.cloud | CHANGED => {
         "Removed: httpd-2.4.37-47.module_el8.6.0+1111+ce6f4ceb.1.x86_64"
     ]
 }
-
+```
 
 
 ```
@@ -109,3 +109,9 @@ alexis.lonchambon.takima.cloud : ok=8    changed=8    unreachable=0    failed=0 
 
 
 `ansible-playbook -i inventories/setup.yml playbook.yml`
+
+
+We ran into a lot of trouble but by putting the dns name in the `.env.production` it ended up working (along with a few config tweaks)
+
+We commented most of the files.   
+Detailed comments are on the `roles/api/tasks/main.yml`

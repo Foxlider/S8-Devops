@@ -1,17 +1,17 @@
 ---
 # tasks file for roles/api
 
-
+# Start both API 
 - name: Create API 1
-  community.docker.docker_container:
-    name: backend-1
-    image: keelah/backend
-    state: started
-    restart: true
-    pull: true
-    networks:
+  community.docker.docker_container:    # default script thingy
+    name: backend-1                     # named
+    image: keelah/backend               # img
+    state: started                      # force start
+    restart: true                       # restart if killed or crashed
+    pull: true                          # force pull latest image
+    networks:                           # network 
       - name: app-net
-    ports:
+    ports:                              # port forward
       - "8181:8080"
   
 - name: Create API 2

@@ -1,8 +1,8 @@
 - hosts: all
   gather_facts: false
-  become: yes
+  become: yes         # rooted
   roles:
-  - docker
+  - docker            # Just the list of roles
   - network
   - database
   - api
