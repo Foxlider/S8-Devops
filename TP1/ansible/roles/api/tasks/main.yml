@@ -1,0 +1,37 @@
+---
+# tasks file for roles/api
+
+
+- name: Create API 1
+  community.docker.docker_container:
+    name: backend-1
+    image: keelah/backend
+    state: started
+    restart: true
+    networks:
+      - name: app-net
+    ports:
+      - "8181:8080"
+  
+- name: Create API 2
+  community.docker.docker_container:
+    name: backend-2
+    image: keelah/backend
+    state: started
+    restart: true
+    networks:
+      - name: app-net
+    ports:
+      - "8182:8080"
+
+- name: Create FONRT
+  community.docker.docker_container:
+    name: fonrt
+    image: keelah/fonrt
+    state: started
+    restart: true
+    networks:
+      - name: app-net
+    ports:
+      - "90:80"
+

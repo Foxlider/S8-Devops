@@ -1,0 +1,19 @@
+---
+# tasks file for roles/database
+
+
+
+- name: Create Postgres Database
+  community.docker.docker_container:
+    name: pg_db
+    image: keelah/pg_db
+    state: started
+    restart: true
+    volumes:
+      - ./storage:/var/lib/postgresql/data
+    networks:
+      - name: app-net
+    env:
+      POSTGRES_DB: db
+      POSTGRES_USER: usr
+      POSTGRES_PASSWORD: pwd

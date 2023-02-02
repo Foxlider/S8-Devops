@@ -1,0 +1,7 @@
+all:
+ vars:
+   ansible_user: centos                           # Our SSH user
+   ansible_ssh_private_key_file: ../../.ssh/id_rsa3  # Our key to login
+ children:
+   prod:
+     hosts: alexis.lonchambon.takima.cloud        # List of hostnames to connect to

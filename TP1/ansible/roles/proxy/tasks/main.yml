@@ -1,0 +1,14 @@
+---
+# tasks file for roles/proxy
+
+
+- name: Create PROXY
+  community.docker.docker_container:
+    name: oueb
+    image: keelah/oueb
+    state: started
+    restart: true
+    networks:
+      - name: app-net
+    ports:
+      - "80:80"
