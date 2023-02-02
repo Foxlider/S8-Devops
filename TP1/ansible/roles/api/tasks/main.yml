@@ -33,6 +33,8 @@
     state: started
     restart: true
     pull: true
+    env:
+      - VUE_APP_API_URL: thony.fain.takima.cloud/api
     networks:
       - name: app-net
     ports:
