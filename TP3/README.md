@@ -108,3 +108,4 @@ alexis.lonchambon.takima.cloud : ok=8    changed=8    unreachable=0    failed=0 
 ```
 
 
+`ansible-playbook -i inventories/setup.yml playbook.yml`

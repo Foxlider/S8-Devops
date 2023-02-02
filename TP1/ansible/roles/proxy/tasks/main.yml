@@ -8,6 +8,7 @@
     image: keelah/oueb
     state: started
     restart: true
+    pull: true
     networks:
       - name: app-net
     ports:

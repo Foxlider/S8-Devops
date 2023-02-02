@@ -8,6 +8,7 @@
     image: keelah/backend
     state: started
     restart: true
+    pull: true
     networks:
       - name: app-net
     ports:
@@ -19,6 +20,7 @@
     image: keelah/backend
     state: started
     restart: true
+    pull: true
     networks:
       - name: app-net
     ports:
@@ -30,6 +32,7 @@
     image: keelah/fonrt
     state: started
     restart: true
+    pull: true
     networks:
       - name: app-net
     ports:
